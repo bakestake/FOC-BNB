@@ -1,8 +1,8 @@
 import {task} from "hardhat/config";
-import {getDeployedAddressesForChain} from "../scripts/libraries/getDeployedAddresses";
-import {FacetCutAction} from "../scripts/getFacetCutAction";
-import {getSelector} from "../scripts/selectors";
-import { getConstants } from "../scripts/libraries/getConstants";
+import {FacetCutAction} from "../../scripts/getFacetCutAction";
+import {getDeployedAddressesForChain} from "../../scripts/libraries/getDeployedAddresses";
+import {getSelector} from "../../scripts/selectors";
+import {getConstants} from "../../scripts/libraries/getConstants";
 
 task("state-facet")
   .addParam("chain")
@@ -27,8 +27,8 @@ task("state-facet")
 
     cut.push({
       facetAddress: facet.target,
-      action: FacetCutAction.Replace,
-      functionSelectors: getSelector("StateUpdate"),
+      action: FacetCutAction.Add,
+      functionSelectors:  getSelector("StateUpdate"),
     });
 
     console.log("Cutting diamond ");
@@ -37,8 +37,13 @@ task("state-facet")
 
     console.log(wormhole?.wormhole)
 
-    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""), {gasLimit:1500000});
+    //let functionCall = facet.interface.encodeFunctionData("initStateUpdate", [wormhole?.wormhole]);
+
+    console.log("function call created.. making a cut now")
+
+    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""), {gasLimit: 1500000});
     console.log("Diamond cut tx: ", tx.hash);
+
     let receipt = await tx.wait();
 
     if (!receipt?.status) {

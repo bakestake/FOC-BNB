@@ -7,14 +7,8 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
-
-interface IBudsVault {
-    function sendBudsTo(address to, uint256 amount) external;
-}
-
-interface IStaking {
-    function getstakingRecord(address userAddress) external returns (address user, uint256 budsAmount, uint256 tokenId);
-}
+import {IStaking} from "../interfaces/IStaking.sol";
+import {IBudsVault} from "../interfaces/IBudsVault.sol";
 
 contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     error ZeroAddress();
@@ -34,6 +28,11 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     IBudsVault public _budsvault;
     IStaking public _stakingContract;
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
 
     function initialize(address budsVault) public initializer {
         if (budsVault == address(0)) {

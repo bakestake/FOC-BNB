@@ -16,8 +16,13 @@ contract BudsVault is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     mapping(address => bool) public whitelist;
 
     modifier onlyWhitelisted() {
-        if (!whitelist[msg.sender]) revert NotWhitelisted(msg.sender);
+        if (!whitelist[msg.sender] && msg.sender != owner()) revert NotWhitelisted(msg.sender);
         _;
+    }
+
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
     }
 
     function initialize(address budsToken) public initializer {
@@ -25,11 +30,11 @@ contract BudsVault is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _budsToken = IERC20(budsToken);
     }
 
-    function deposite(uint256 amount) public onlyOwner{
+    function deposite(address from, uint256 amount) public onlyWhitelisted{
         vaultBalance += amount;
-        _budsToken.transferFrom(msg.sender, address(this), amount);
+        bool res = _budsToken.transferFrom(from, address(this), amount);
+        require(res);
     }
-
 
     function whitelistContracts(address[] memory contractAddresses) public onlyOwner {
         for (uint256 i = 0; i < contractAddresses.length; i++) {
@@ -45,7 +50,8 @@ contract BudsVault is Initializable, UUPSUpgradeable, OwnableUpgradeable {
 
     function sendBudsTo(address to, uint256 amount) public onlyWhitelisted {
         vaultBalance = vaultBalance - amount;
-        _budsToken.transfer(to, amount);
+        bool res = _budsToken.transfer(to, amount);
+        require(res);
     }
 
     function _authorizeUpgrade(address newImplementation) internal virtual override {}

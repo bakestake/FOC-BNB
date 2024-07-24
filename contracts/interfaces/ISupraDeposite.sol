@@ -15,5 +15,4 @@ interface ISupraDeposite {
 	function getSubscriptionInfoByClient(address _clientAddress) external view returns (uint256, uint256, bool);
 	function isMinimumBalanceReached(address _clientAddress) external view returns (bool);
 	function listAllWhitelistedContractByClient(address _clientAddress) external view returns (address[] memory);
-	
 }

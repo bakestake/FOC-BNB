@@ -1,7 +1,7 @@
 import {task} from "hardhat/config";
-import {getDeployedAddressesForChain} from "../scripts/libraries/getDeployedAddresses";
-import {FacetCutAction} from "../scripts/getFacetCutAction";
-import {getSelector} from "../scripts/selectors";
+import {getDeployedAddressesForChain} from "../../scripts/libraries/getDeployedAddresses";
+import {FacetCutAction} from "../../scripts/getFacetCutAction";
+import {getSelector} from "../../scripts/selectors";
 
 task("chain-facet")
   .addParam("chain")
@@ -25,13 +25,13 @@ task("chain-facet")
 
     cut.push({
       facetAddress: facet.target,
-      action: FacetCutAction.Add,
+      action: FacetCutAction.Replace,
       functionSelectors: getSelector("ChainFacet"),
     });
-
+    
     console.log("Cutting diamond ");
 
-    let tx = await cutContract.diamondCut(cut, facet.target, hre.ethers.id(""));
+    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""),{gasLimit:"1500000"});
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 

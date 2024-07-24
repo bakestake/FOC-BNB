@@ -19,6 +19,10 @@ export const getConstants = async (networkName: string) => {
     case "arbSepolia":
       return ADDRESES.arbSepolia;
     case "beraTestnet":
-      return ADDRESES.bera_atrio;
+      return ADDRESES.bera_batrio;
+    case "coreTestnet":
+      return ADDRESES.coreTestnet;
+    case "baseSepolia":
+      return ADDRESES.baseSpolia
   }
 };

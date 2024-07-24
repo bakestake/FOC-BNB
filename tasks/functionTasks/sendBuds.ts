@@ -10,7 +10,7 @@ task("send-buds")
 
         const deployedAddresses = await getDeployedAddressesForChain(taskArgs.chain)
 
-        const BudsInst = await hre.ethers.getContractAt("SNBBuds", deployedAddresses?.BudsToken || "");
+        const BudsInst = await hre.ethers.getContractAt("Buds", deployedAddresses?.BudsToken || "");
 
         const tx = await BudsInst.transfer(taskArgs.to, hre.ethers.parseEther(taskArgs.amount));
 

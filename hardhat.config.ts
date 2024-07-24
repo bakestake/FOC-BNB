@@ -16,15 +16,15 @@ const mnemonic: string = vars.get("MNEMONIC");
 const infuraApiKey: string = vars.get("INFURA_API_KEY");
 
 const chainIds = {
-  "arbitrum-mainnet": 42161,
-  avalanche: 43114,
-  bsc: 56,
-  ganache: 1337,
-  hardhat: 31337,
-  mainnet: 1,
-  "optimism-mainnet": 10,
-  "polygon-mainnet": 137,
-  sepolia: 11155111,
+  "arbitrum-mainnet":42161,
+  avalanche:43114,
+  bsc:56,
+  ganache:1337,
+  hardhat:31337,
+  mainnet:1,
+  "optimism-mainnet":10,
+  "polygon-mainnet":137,
+  sepolia:11155111,
   beraTestnet:80084,
   amoy:80002,
   bscTestnet:97,
@@ -47,7 +47,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://data-seed-prebsc-1-s1.bnbchain.org:8545";
       break;
     case "fuji":
-      jsonRpcUrl = "https://rpc.ankr.com/avalanche_fuji/31b874ea0ab43b8e4ab9797c39775469764576aa3458b1be6e275165f7330552";
+      jsonRpcUrl = "https://api.avax-test.network/ext/bc/C/rpc";
       break;
     case "amoy":
       jsonRpcUrl = "https://polygon-amoy.g.alchemy.com/v2/m-HgDS8nYeULpTlmWmVau-bVmvIsVkTE";
@@ -59,7 +59,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://bartio.rpc.berachain.com/";
       break;
     case "baseSepolia":
-      jsonRpcUrl = "https://base.llamarpc.com";
+      jsonRpcUrl = "https://base-sepolia.g.alchemy.com/v2/m-HgDS8nYeULpTlmWmVau-bVmvIsVkTE";
       break;
     case "coreTestnet":
       jsonRpcUrl = "https://rpc.test.btcs.network"
@@ -68,7 +68,7 @@ function getChainConfig(chain: keyof typeof chainIds): NetworkUserConfig {
       jsonRpcUrl = "https://rpc.ankr.com/" + chain + "/"+infuraApiKey;
   }
   return {
-    accounts: [process.env.PRIVATE_KEY || ""],
+    accounts: [process.env.PRIVATE_KEY||""],
     chainId: chainIds[chain],
     url: jsonRpcUrl,
   };
@@ -235,6 +235,7 @@ task(
     const web3fuji = createAlchemyWeb3(process.env.RPC_URL_FUJI || "");
     const web3baseSep = createAlchemyWeb3(process.env.RPC_URL_BASE_SEPOLIA ||
      "");
+    const web3CoreTest = createAlchemyWeb3(process.env.RPC_URL_CORE_TESTNET || "");
 
     const networkIDArr = [
       "bera:",
@@ -242,9 +243,10 @@ task(
       "bscTestnet",
       "arbSepolia",
       "fuji",
-      "baseSepolia"
+      "baseSepolia",
+      "coreTestnet"
     ];
-    const providerArr = [web3Bera, web3Mumbai, web3bsc, web3arb, web3fuji, web3baseSep];
+    const providerArr = [web3Bera, web3Mumbai, web3bsc, web3arb, web3fuji, web3baseSep, web3CoreTest];
     const resultArr = [];
 
     for (let i = 0; i < providerArr.length; i++) {

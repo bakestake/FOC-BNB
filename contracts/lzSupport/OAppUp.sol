@@ -13,6 +13,7 @@ import { OAppCore } from "./OAppCoreUp.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
+
 /**
  * @title OApp
  * @dev Abstract contract serving as the base for OApp implementation, combining OAppSender and OAppReceiver functionality.
@@ -23,7 +24,7 @@ abstract contract OApp is Initializable, UUPSUpgradeable, OAppSender, OAppReceiv
      * @param _endpoint The address of the LOCAL LayerZero endpoint.
      * @param _delegate The delegate capable of making OApp configurations inside of the endpoint.
      */
-    function __OApp_Init(address _endpoint, address _delegate) public initializer {
+    function __OApp_Init(address _endpoint, address _delegate) public initializer{
         __UUPSUpgradeable_init();
         __OAppCore_Init(_endpoint, _delegate);
     }
@@ -40,6 +41,6 @@ abstract contract OApp is Initializable, UUPSUpgradeable, OAppSender, OAppReceiv
         override(OAppSender, OAppReceiver)
         returns (uint64 senderVersion, uint64 receiverVersion)
     {
-        return (SENDER_VERSION, RECEIVER_VERSION);
+        return (1, 2);
     }
 }

@@ -12,7 +12,7 @@ import { IERC721Errors } from "@openzeppelin/contracts/interfaces/draft-IERC6093
 import "../interfaces/IXP.sol";
 import "../interfaces/IChars.sol";
 
-contract SNBNarc is
+contract Farmer is
     Initializable,
     ERC721Upgradeable,
     ERC721EnumerableUpgradeable,
@@ -26,26 +26,25 @@ contract SNBNarc is
 
     bytes32 public MINTER_ROLE;
     bytes32 public UPGRADER_ROLE;
-    bytes32 public CROSS_CHAIN_HUB;
+    bytes32 public STAKING_CONTRACT;
 
     uint256 private _nextTokenId;
     uint256 private _tokensLeft;
 
-    address public _stakingContractAddress;
     address public _xpToken;
 
     mapping(uint256 tokenId => uint8 level) public levelByTokenId;
     mapping(uint8 level => string uri) public uriByLevel;
 
-    modifier onlyStakingContract() {
-        if (msg.sender != _stakingContractAddress) revert UnauthorizedAccess();
-        _;
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
     }
 
-    function initialize(uint256 _seed, address _xp, string[] memory uris) public initializer {
+    function initialize(uint256 _seed, address _xp, address _stakingAddress, string[] memory uris) public initializer {
         if (_xp == address(0)) revert ZeroAddress();
 
-        __ERC721_init("SNB Narc", "NARC");
+        __ERC721_init("Bakeland Farmer", "FARMER");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
         __AccessControl_init();
@@ -53,13 +52,14 @@ contract SNBNarc is
 
         MINTER_ROLE = keccak256("MINTER_ROLE");
         UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-        CROSS_CHAIN_HUB = keccak256("CROSS_CHAIN_HUB");
+        STAKING_CONTRACT = keccak256("STAKING_CONTRACT");
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
+        _grantRole(STAKING_CONTRACT, _stakingAddress);
 
-        _tokensLeft = 420;
+        _tokensLeft = 699;
         _nextTokenId = _seed;
         _xpToken = _xp;
 
@@ -68,10 +68,6 @@ contract SNBNarc is
         }
     }
 
-    function setStakingAddress(address _stakingAddress) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (_stakingAddress == address(0)) revert ZeroAddress();
-        _stakingContractAddress = _stakingAddress;
-    }
 
     function setMinter(address newMinter) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (newMinter == address(0)) revert ZeroAddress();
@@ -89,13 +85,14 @@ contract SNBNarc is
     }
 
     function levelUpToken(uint256 tokenId) external {
-        if (!_isAuthorized(ownerOf(tokenId), msg.sender, tokenId) || ownerOf(tokenId) != msg.sender)
+        if (!_isAuthorized(ownerOf(tokenId), msg.sender, tokenId))
             revert IERC721Errors.ERC721InsufficientApproval(msg.sender, tokenId);
+        if (ownerOf(tokenId) != msg.sender) revert UnauthorizedAccess();
+
         uint256 xpToBurn = calculateRequiredXp(levelByTokenId[tokenId]);
-
-        IXP(_xpToken).burn(msg.sender, xpToBurn);
-
         levelByTokenId[tokenId]++;
+        
+        IXP(_xpToken).burn(msg.sender, xpToBurn);
         _setTokenURI(tokenId, uriByLevel[levelByTokenId[tokenId]]);
     }
 
@@ -103,16 +100,13 @@ contract SNBNarc is
         return level + 1 * 500 ether;
     }
 
-    function burnFrom(uint256 tokenId) external onlyStakingContract {
+    function burnFrom(uint256 tokenId) public onlyRole(STAKING_CONTRACT){
+        if (!_isAuthorized(ownerOf(tokenId), msg.sender, tokenId))
+            revert IERC721Errors.ERC721InsufficientApproval(msg.sender, tokenId);
         _burn(tokenId);
     }
 
-    function burnFrom(uint256 tokenId, address owner) public {
-        if (!_isAuthorized(owner, msg.sender, tokenId)) revert UnauthorizedAccess();
-        _burn(tokenId);
-    }
-
-    function mintTokenId(address _to, uint256 _tokenId) external onlyRole(CROSS_CHAIN_HUB) {
+    function mintTokenId(address _to, uint256 _tokenId) external onlyRole(STAKING_CONTRACT) {
         _mint(_to, _tokenId);
     }
 
@@ -153,7 +147,7 @@ contract SNBNarc is
         super.transferFrom(from, to, tokenId);
     }
 
-    function setUriForToken(uint256 tokenId, string calldata uriString) external onlyRole(CROSS_CHAIN_HUB) {
+    function setUriForToken(uint256 tokenId, string calldata uriString) external onlyRole(STAKING_CONTRACT) {
         _setTokenURI(tokenId, uriString);
     }
 

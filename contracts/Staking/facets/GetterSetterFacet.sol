@@ -19,7 +19,7 @@ contract GetterSetterFacet {
         return LibGlobalVarState.getCurrentApr();
     }
 
-    function getUserStakes(address user) external view returns(LibGlobalVarState.Stake[] memory){
+    function getUserStakes(address user) public view returns(LibGlobalVarState.Stake[] memory){
         uint256 len = LibGlobalVarState.mappingStore().stakeRecord[user].length;
         LibGlobalVarState.Stake[] memory stakes = new LibGlobalVarState.Stake[](len);  
 
@@ -50,6 +50,22 @@ contract GetterSetterFacet {
         return LibGlobalVarState.intStore().noOfChains;
     }
 
+    function getBudsLostToRaids() external view returns(uint256){
+        return LibGlobalVarState.intStore().budsLostToRaids;
+    }
+
+    function getRewardsForUser(address user) external view returns(uint256 rewards){
+        LibGlobalVarState.Stake[] memory stake = getUserStakes(user);
+        uint256 stakedAmount = 0;
+        
+        for(uint i = 0; i < stake.length; i++){
+            LibGlobalVarState.Stake memory curStake = stake[i];
+            stakedAmount += curStake.budsAmount;
+        }
+
+        rewards = stakedAmount * getCurrentApr();
+    }
+
     function setNoOfChains(uint256 chains) external {
         if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
         LibGlobalVarState.intStore().noOfChains = chains;
@@ -65,6 +81,11 @@ contract GetterSetterFacet {
         LibGlobalVarState.addressStore().treasuryWallet = newAddress;
     }
 
+    function transferOwner(address newOwner) external{
+        if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
+        LibDiamond.setContractOwner(newOwner);
+    } 
+
     function startContest() external {
         if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
         LibGlobalVarState.boolStore().isContestOpen = true;
@@ -73,6 +94,11 @@ contract GetterSetterFacet {
     function closeContest() external {
         if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
         LibGlobalVarState.boolStore().isContestOpen = false;
+    }
+
+    function withdrawEth() external {
+        if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
+        payable(LibDiamond.contractOwner()).transfer(address(this).balance);
     }
 
 }

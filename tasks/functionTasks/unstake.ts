@@ -3,7 +3,6 @@ import { getDeployedAddressesForChain } from "../../scripts/libraries/getDeploye
 
 task("unstake")
 .addParam("chain")
-.addParam("index")
 .addParam("amount")
 .setAction(async (taskArgs, hre) => {
     try{
@@ -13,7 +12,7 @@ task("unstake")
 
         console.log("unstaking")
 
-        await contractInst.unStakeBuds(hre.ethers.parseEther(taskArgs.amount), taskArgs.index);
+        await contractInst.unStakeBuds(hre.ethers.parseEther(taskArgs.amount));
 
         console.log("unstake done")
     }catch(error){

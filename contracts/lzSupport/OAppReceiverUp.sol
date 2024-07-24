@@ -4,6 +4,8 @@ pragma solidity ^0.8.20;
 
 import { IOAppReceiver, Origin } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/interfaces/IOAppReceiver.sol";
 import { OAppCore } from "./OAppCoreUp.sol";
+import {LzState} from "../Staking/lib/Lz.sol";
+
 
 /**
  * @title OAppReceiver
@@ -12,10 +14,6 @@ import { OAppCore } from "./OAppCoreUp.sol";
 abstract contract OAppReceiver is IOAppReceiver, OAppCore {
     // Custom error message for when the caller is not the registered endpoint/
     error OnlyEndpoint(address addr);
-
-    // @dev The version of the OAppReceiver implementation.
-    // @dev Version is bumped when changes are made to this contract.
-    uint64 internal RECEIVER_VERSION = 2;
 
     /**
      * @notice Retrieves the OApp version information.
@@ -27,7 +25,7 @@ abstract contract OAppReceiver is IOAppReceiver, OAppCore {
      * @dev If the OApp uses both OAppSender and OAppReceiver, then this needs to be override returning the correct versions.
      */
     function oAppVersion() public view virtual returns (uint64 senderVersion, uint64 receiverVersion) {
-        return (0, RECEIVER_VERSION);
+        return (0, 2);
     }
 
     /**
@@ -61,7 +59,7 @@ abstract contract OAppReceiver is IOAppReceiver, OAppCore {
      * Can be overridden by the OApp if there is other logic to determine this.
      */
     function allowInitializePath(Origin calldata origin) public view virtual returns (bool) {
-        return peers[origin.srcEid] == origin.sender;
+        return LzState.getStorage().peers[origin.srcEid] == origin.sender;
     }
 
     /**
@@ -100,7 +98,7 @@ abstract contract OAppReceiver is IOAppReceiver, OAppCore {
         bytes calldata _extraData
     ) public payable virtual {
         // Ensures that only the endpoint can attempt to lzReceive() messages to this OApp.
-        if (address(endpoint) != msg.sender) revert OnlyEndpoint(msg.sender);
+        if (address(LzState.getStorage().endpoint) != msg.sender) revert OnlyEndpoint(msg.sender);
 
         // Ensure that the sender matches the expected peer for the source endpoint.
         if (_getPeerOrRevert(_origin.srcEid) != _origin.sender) revert OnlyPeer(_origin.srcEid, _origin.sender);

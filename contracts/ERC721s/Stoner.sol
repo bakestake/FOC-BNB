@@ -11,12 +11,11 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 import "../interfaces/IBooster.sol";
 
-contract SNBInformant is
+contract Stoner is
     Initializable,
     ERC721Upgradeable,
     ERC721EnumerableUpgradeable,
     ERC721URIStorageUpgradeable,
-    ERC721BurnableUpgradeable,
     AccessControlUpgradeable,
     UUPSUpgradeable,
     IBoosters
@@ -24,30 +23,32 @@ contract SNBInformant is
     error ZeroAddress();
     error UnauthorizedAccess();
 
-    bytes32 public MINTER_ROLE;
     bytes32 public UPGRADER_ROLE;
-    bytes32 public CROSS_CHAIN_HUB;
+    bytes32 public STAKING_ROLE;
 
     uint256 private _nextTokenId;
     uint256 private _noOfChains;
 
     string public uri;
 
-    function initialize(uint256 seed, string memory _uri) public initializer {
-        __ERC721_init("SNB Informant", "INFORMANT");
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize(uint256 seed, address _stakingAddress, string memory _uri) public initializer {
+        __ERC721_init("Bakeland Stoner", "STONER");
         __ERC721Enumerable_init();
         __ERC721URIStorage_init();
-        __ERC721Burnable_init();
         __AccessControl_init();
         __UUPSUpgradeable_init();
 
-        MINTER_ROLE = keccak256("MINTER_ROLE");
         UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
-        CROSS_CHAIN_HUB = keccak256("CROSS_CHAIN_HUB");
+        STAKING_ROLE = keccak256("STAKING_ROLE");
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
+        _grantRole(STAKING_ROLE, _stakingAddress);
 
         _nextTokenId = seed;
         _noOfChains = 5;
@@ -58,7 +59,7 @@ contract SNBInformant is
         _noOfChains = noOfChains;
     }
 
-    function safeMint(address to) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+    function safeMint(address to) external onlyRole(STAKING_ROLE) returns (uint256 tokenId) {
         if (to == address(0)) revert ZeroAddress();
         tokenId = _nextTokenId;
         _nextTokenId += _noOfChains;
@@ -66,15 +67,13 @@ contract SNBInformant is
         _setTokenURI(tokenId, uri);
     }
 
-    function mintTokenId(address to, uint256 tokenId) external onlyRole(CROSS_CHAIN_HUB) {
-        if (to == address(0)) revert ZeroAddress();
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
+    function burnFrom(uint256 tokenId) public onlyRole(STAKING_ROLE) {
+        if (!_isAuthorized(ownerOf(tokenId), msg.sender, tokenId)) revert UnauthorizedAccess();
+        _burn(tokenId);
     }
 
-    function burnFrom(uint256 tokenId, address owner) public {
-        if (!_isAuthorized(owner, msg.sender, tokenId)) revert UnauthorizedAccess();
-        _burn(tokenId);
+    function mintTokenId(address _to, uint256 _tokenId) external onlyRole(STAKING_ROLE) {
+        _mint(_to, _tokenId);
     }
 
     function _authorizeUpgrade(address newImplementation) internal override onlyRole(UPGRADER_ROLE) {}
@@ -107,13 +106,11 @@ contract SNBInformant is
     )
         public
         view
-        override(AccessControlUpgradeable, ERC721Upgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable)
+        override(AccessControlUpgradeable, ERC721EnumerableUpgradeable, ERC721URIStorageUpgradeable, ERC721Upgradeable)
         returns (bool)
     {}
 
-    function ownerOf(
-        uint256 tokenId
-    ) public view override(ERC721Upgradeable, IERC721, IBoosters) returns (address owner) {}
+    function ownerOf(uint256 tokenId) public view override(ERC721Upgradeable, IBoosters, IERC721) returns (address owner) {}
 
-    function burn(uint256 tokenId) public virtual override(ERC721BurnableUpgradeable, IBoosters) {}
+    function burn(uint256 tokenId) external override {}
 }

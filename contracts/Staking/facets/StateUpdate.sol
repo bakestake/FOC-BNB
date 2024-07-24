@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {LibGlobalVarState} from "../lib/LidGlobalDataState.sol";
 
 import {LibDiamond} from "../lib/LibDiamond.sol";
@@ -9,8 +8,13 @@ import "wormhole-solidity-sdk/libraries/BytesParsing.sol";
 import "wormhole-solidity-sdk/interfaces/IWormhole.sol";
 import {QueryResponse} from "../../wormholeSupport/QueryResponse.sol";
 
-contract StateUpdate is Initializable, QueryResponse {
+contract StateUpdate is QueryResponse {
     using BytesParsing for bytes;
+
+    function changeWormholeAddress(address wormholeAddress) external{
+        LibDiamond.enforceIsContractOwner();
+        wormhole = IWormhole(wormholeAddress);
+    }
 
     function updateState(bytes memory response, IWormhole.Signature[] memory signatures) public {
         uint256 globalCount;

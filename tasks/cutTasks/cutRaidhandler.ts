@@ -1,9 +1,10 @@
 import {task} from "hardhat/config";
-import {getDeployedAddressesForChain} from "../scripts/libraries/getDeployedAddresses";
-import {FacetCutAction} from "../scripts/getFacetCutAction";
-import {getSelector} from "../scripts/selectors";
+import {FacetCutAction} from "../../scripts/getFacetCutAction";
+import {getDeployedAddressesForChain} from "../../scripts/libraries/getDeployedAddresses";
+import {getSelector} from "../../scripts/selectors";
+import {getConstants} from "../../scripts/libraries/getConstants";
 
-task("setter-facet")
+task("raid-facet")
   .addParam("chain")
   .setAction(async (args, hre) => {
     const signer = await hre.ethers.getSigners();
@@ -15,7 +16,7 @@ task("setter-facet")
       diamondAddress
     );
 
-    const chainFacet = await hre.ethers.getContractFactory("GetterSetterFacet");
+    const chainFacet = await hre.ethers.getContractFactory("RaidHandler");
     const facet = await chainFacet.deploy();
     await facet.waitForDeployment();
 
@@ -25,8 +26,8 @@ task("setter-facet")
 
     cut.push({
       facetAddress: facet.target,
-      action: FacetCutAction.Add,
-      functionSelectors: getSelector("GetterSetterFacet"),
+      action: FacetCutAction.Replace,
+      functionSelectors: getSelector("RaidHandler"),
     });
 
     console.log("Cutting diamond ");
@@ -39,5 +40,5 @@ task("setter-facet")
       throw Error(`Diamond upgrade failed: ${tx.hash}`);
     }
 
-    console.log("Completed diamond cut for chain Facet on : ", args.chain);
+    console.log("Completed diamond cut for Raid handler Facet on : ", args.chain);
   });

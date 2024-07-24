@@ -1,10 +1,11 @@
 import {task} from "hardhat/config";
-import {getDeployedAddressesForChain} from "../scripts/libraries/getDeployedAddresses";
-import {FacetCutAction} from "../scripts/getFacetCutAction";
-import {getSelector} from "../scripts/selectors";
-import {getConstants} from "../scripts/libraries/getConstants";
+import {FacetCutAction} from "../../scripts/getFacetCutAction";
+import {getDeployedAddressesForChain} from "../../scripts/libraries/getDeployedAddresses";
+import {getSelector} from "../../scripts/selectors";
+import {getConstants} from "../../scripts/libraries/getConstants";
+import { ethers } from "hardhat";
 
-task("cross-chain-facet")
+task("setter-facet")
   .addParam("chain")
   .setAction(async (args, hre) => {
     const signer = await hre.ethers.getSigners();
@@ -16,7 +17,7 @@ task("cross-chain-facet")
       diamondAddress
     );
 
-    const chainFacet = await hre.ethers.getContractFactory("CrossChainFacet");
+    const chainFacet = await hre.ethers.getContractFactory("GetterSetterFacet");
     const facet = await chainFacet.deploy();
     await facet.waitForDeployment();
 
@@ -26,20 +27,13 @@ task("cross-chain-facet")
 
     cut.push({
       facetAddress: facet.target,
-      action: FacetCutAction.Add,
-      functionSelectors: getSelector("CrossChainFacet"),
+      action: FacetCutAction.Replace,
+      functionSelectors: getSelector("GetterSetterFacet"),
     });
 
     console.log("Cutting diamond ");
 
-    const constants = await getConstants(args.chain);
-
-    console.log("initializing");
-    let functionCall = facet.interface.encodeFunctionData("init", [
-      constants?.lzEndpoint,
-    ]);
-
-    let tx = await cutContract.diamondCut(cut, facet.target, functionCall);
+    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""));
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 
