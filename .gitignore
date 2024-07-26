@@ -12,6 +12,7 @@ types
 deployments
 
 # files
+bugs.txt
 *.env
 *.log
 .DS_Store
