@@ -86,7 +86,7 @@ const config: HardhatUserConfig = {
       amoy: process.env.POLYSCAN_API_KEY || "",
       sepolia: vars.get("ETHERSCAN_API_KEY", ""),
       arbitrumSepolia: process.env.ARBSEPOLIA_TESTNET_API_KEY || "",
-      beraTestnet: "beraTestnet",
+      beraTestnet: "bartio_testnet",
       baseSepolia: process.env.BASE_TESTNET_API_KEY || "",
       coreTestnet: "api key"
     },
@@ -111,7 +111,7 @@ const config: HardhatUserConfig = {
           network: "beraTestnet",
           chainId: 80084,
           urls: {
-              apiURL:"https://api.routescan.io/v2/network/testnet/evm/80084/etherscan",
+              apiURL:"https://api.routescan.io/v2/network/testnet/evm/80084/etherscan/api/",
               browserURL: "https://bartio.beratrail.io/",
           }
         },

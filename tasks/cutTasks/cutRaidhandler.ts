@@ -16,19 +16,32 @@ task("raid-facet")
       diamondAddress
     );
 
-    const chainFacet = await hre.ethers.getContractFactory("RaidHandler");
-    const facet = await chainFacet.deploy();
-    await facet.waitForDeployment();
-
-    console.log("Deployed on:", facet.target);
-
     let cut = [];
 
-    cut.push({
-      facetAddress: facet.target,
-      action: FacetCutAction.Replace,
-      functionSelectors: getSelector("RaidHandler"),
-    });
+    if(args.chain == "beraTestnet"){
+      const chainFacet = await hre.ethers.getContractFactory("RaidHandlerAlt");
+      const facet = await chainFacet.deploy();
+      await facet.waitForDeployment();
+
+      console.log("Deployed on:", facet.target);
+
+      cut.push({
+        facetAddress: facet.target,
+        action: FacetCutAction.Add,
+        functionSelectors: getSelector("RaidHandlerAlt"),
+      });
+    }else{
+      const chainFacet = await hre.ethers.getContractFactory("RaidHandler");
+      const facet = await chainFacet.deploy();
+      await facet.waitForDeployment();
+
+      console.log("Deployed on:", facet.target);
+      cut.push({
+        facetAddress: facet.target,
+        action: FacetCutAction.Replace,
+        functionSelectors: getSelector("RaidHandler"),
+      });
+    }
 
     console.log("Cutting diamond ");
 

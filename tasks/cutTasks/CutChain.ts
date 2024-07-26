@@ -31,7 +31,7 @@ task("chain-facet")
     
     console.log("Cutting diamond ");
 
-    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""),{gasLimit:"1500000"});
+    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""),{gasLimit:"2500000"});
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 

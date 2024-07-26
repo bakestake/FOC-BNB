@@ -89,6 +89,8 @@ const burnFacetSelector = [
 
 const raidHandlerSelector = ["0x11778b65", "0xb43d0375"];
 
+const raidHandlerAltSelector = ["0x52a5f1f8"];
+
 export const getSelector = (contractName: string) => {
   switch (contractName) {
     case "ChainFacet":
@@ -103,6 +105,8 @@ export const getSelector = (contractName: string) => {
       return stateUpdateSelector;
     case "RaidHandler":
       return raidHandlerSelector;
+    case "RaidHandlerAlt":
+      return raidHandlerAltSelector;
     case "BurnFacet":
       return burnFacetSelector;
     default:

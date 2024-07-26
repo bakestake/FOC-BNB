@@ -22,11 +22,13 @@ task("set-peers")
 
             const constants = await getConstants(chains[i]);
 
-            console.log(constants?.endpointId || "", deployedAddresses?.Staking || "")
+            const targetChainAddresses = await getDeployedAddressesForChain(chains[i])
 
-            console.log(hre.ethers.zeroPadValue(deployedAddresses?.Staking || "", 32))
+            console.log(constants?.endpointId || "", targetChainAddresses?.Staking || "")
 
-            const tx = await contractInst.setPeer(constants?.endpointId || "", hre.ethers.zeroPadValue(deployedAddresses?.Staking || "", 32), {gasLimit:2500000});
+            console.log(hre.ethers.zeroPadValue(targetChainAddresses?.Staking || "", 32))
+
+            const tx = await contractInst.setPeer(constants?.endpointId || "", hre.ethers.zeroPadValue(targetChainAddresses?.Staking || "", 32), {gasLimit:2500000});
 
             await tx.wait();
 

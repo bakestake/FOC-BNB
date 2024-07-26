@@ -37,7 +37,7 @@ task("cc-stake")
 
         console.log(hre.ethers.parseEther(taskArgs.amount), taskArgs.token, BigInt(constants?.endpointId || ""))
 
-        const tx = await contractInst.crossChainStake(hre.ethers.parseEther(taskArgs.amount), taskArgs.token, BigInt(constants?.endpointId || ""), {gasLimit:2500000, value:hre.ethers.parseEther("0.05")});
+        const tx = await contractInst.crossChainStake(hre.ethers.parseEther(taskArgs.amount), taskArgs.token, BigInt(constants?.endpointId || ""), {gasLimit:2500000, value:hre.ethers.parseEther("0.09")});
 
         await tx.wait();
 

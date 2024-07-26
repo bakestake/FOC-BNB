@@ -13,7 +13,7 @@ contract LzInit is OApp {
         LzState.getStorage().CROSS_CHAIN_NFT_TRANSFER = bytes32("CROSS_CHAIN_NFT_TRANSFER");
         LzState.getStorage().CROSS_CHAIN_BUDS_TRANSFER = bytes32("CROSS_CHAIN_BUDS_TRANSFER");
 
-        // __OApp_Init(lzEndpoint, msg.sender);
+        __OApp_Init(lzEndpoint, msg.sender);
     }
 
     function _lzReceive(

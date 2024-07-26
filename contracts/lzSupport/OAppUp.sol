@@ -9,6 +9,8 @@ import { OAppSender, MessagingFee, MessagingReceipt } from "./OAppSenderUp.sol";
 // solhint-disable-next-line no-unused-import
 import { OAppReceiver, Origin } from "./OAppReceiverUp.sol";
 import { OAppCore } from "./OAppCoreUp.sol";
+import {LibDiamond} from "../Staking/lib/LibDiamond.sol";
+
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -18,14 +20,14 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
  * @title OApp
  * @dev Abstract contract serving as the base for OApp implementation, combining OAppSender and OAppReceiver functionality.
  */
-abstract contract OApp is Initializable, UUPSUpgradeable, OAppSender, OAppReceiver {
+abstract contract OApp is  OAppSender, OAppReceiver {
     /**
      * @dev Constructor to initialize the OApp with the provided endpoint and owner.
      * @param _endpoint The address of the LOCAL LayerZero endpoint.
      * @param _delegate The delegate capable of making OApp configurations inside of the endpoint.
      */
-    function __OApp_Init(address _endpoint, address _delegate) public initializer{
-        __UUPSUpgradeable_init();
+    function __OApp_Init(address _endpoint, address _delegate) public {
+        LibDiamond.enforceIsContractOwner();
         __OAppCore_Init(_endpoint, _delegate);
     }
 

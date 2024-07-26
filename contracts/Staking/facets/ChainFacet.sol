@@ -204,7 +204,7 @@ contract ChainFacet is IERC721Receiver {
         }
         
         LibGlobalVarState.addressStore().treasuryWallet.transfer(msg.value);
-        IStaking(address(this)).raidPool(
+        LibGlobalVarState.raidPool(
             tokenId,
             msg.sender
         );
@@ -219,7 +219,7 @@ contract ChainFacet is IERC721Receiver {
         }
         LibGlobalVarState.addressStore().treasuryWallet.transfer(msg.value);
 
-        IStaking(address(this)).raidPoolCustom(
+        LibGlobalVarState.raidPoolCustom(
             tokenId,
             msg.sender,
             riskLevel

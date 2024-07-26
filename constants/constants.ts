@@ -11,6 +11,7 @@ export const ADDRESES = {
     endpointId: "30109",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x7A4B5a56256163F07b2C80A7cA55aBE66c4ec4d7",
+    pyth:""
   },
   amoy: {
     chainId: 80002,
@@ -24,6 +25,7 @@ export const ADDRESES = {
     endpointId: "40267",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
+    pyth:""
   },
   bsc: {
     chainId: 56,
@@ -37,6 +39,7 @@ export const ADDRESES = {
     endpointId: "30102",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
+    pyth:""
   },
   bscTestnet: {
     chainId: 97,
@@ -50,6 +53,7 @@ export const ADDRESES = {
     endpointId: "40102",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x68605AD7b15c732a30b1BbC62BE8F2A509D74b4D",
+    pyth:""
   },
   avalanche: {
     chainId: 43114,
@@ -63,6 +67,7 @@ export const ADDRESES = {
     endpointId: "30106",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x54a8e5f9c4CbA08F9943965859F6c34eAF03E26c",
+    pyth:""
   },
   fuji: {
     chainId: 43113,
@@ -76,6 +81,7 @@ export const ADDRESES = {
     endpointId: "40106",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x7bbcE28e64B3F8b84d876Ab298393c38ad7aac4C",
+    pyth:""
   },
   arbitrum: {
     chainId: 42161,
@@ -89,6 +95,7 @@ export const ADDRESES = {
     endpointId: "30110",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
+    pyth:""
   },
   arbSepolia: {
     chainId: 421614,
@@ -102,6 +109,7 @@ export const ADDRESES = {
     endpointId: "40231",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
+    pyth:""
   },
   optimism: {
     chainId: 42161,
@@ -115,6 +123,7 @@ export const ADDRESES = {
     endpointId: "30111",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722",
+    pyth:""
   },
   opGoerli: {
     chainId: 42161,
@@ -128,6 +137,7 @@ export const ADDRESES = {
     endpointId: "40102",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
+    pyth:""
   },
   base: {
     chainId: 42161,
@@ -141,6 +151,7 @@ export const ADDRESES = {
     endpointId: "30184",
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xbebdb6C8ddC678FfA9f8748f85C815C556Dd8ac6",
+    pyth:""
   },
   baseSpolia: {
     chainId: 84532,
@@ -154,6 +165,7 @@ export const ADDRESES = {
     endpointId: "40245",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x79A1027a6A159502049F10906D333EC57E95F083",
+    pyth:""
   },
   bera_batrio: {
     chainId: 80085,
@@ -167,6 +179,7 @@ export const ADDRESES = {
     endpointId: "40291",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd",
+    pyth:"0x36825bf3Fbdf5a29E2d5148bfe7Dcf7B5639e320"
   },
   coreTestnet: {
     chainId: 1115,
@@ -180,6 +193,7 @@ export const ADDRESES = {
     endpointId: "40153",
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd",
+    pyth:""
   },
 
 };

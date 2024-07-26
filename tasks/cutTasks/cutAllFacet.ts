@@ -26,7 +26,7 @@ task("cut-all", "Deploys and initializes diamond")
     // // deploy facets
     // console.log("");
     console.log("Deploying facets");
-    const FacetNames = ["DiamondLoupeFacet","ChainFacet","CrossChainFacet","GetterSetterFacet","RaidHandler","BurnFacet","StateUpdate"];
+    const FacetNames = ["DiamondLoupeFacet","ChainFacet","CrossChainFacet","GetterSetterFacet","BurnFacet","StateUpdate"];
     const cut = [];
     for (const FacetName of FacetNames) {
       const Facet = await hre.ethers.getContractFactory(FacetName);
@@ -37,6 +37,29 @@ task("cut-all", "Deploys and initializes diamond")
         facetAddress: facet.target,
         action: FacetCutAction.Add,
         functionSelectors: getSelector(FacetName),
+      });
+    }
+
+
+    if(args.chain == "beraTestnet"){
+      const Facet = await hre.ethers.getContractFactory("RaidHandlerAlt");
+      const facet = await Facet.deploy();
+      await facet.waitForDeployment();
+      console.log(`RaidHandlerAlt deployed: ${facet.target}`);
+      cut.push({
+        facetAddress: facet.target,
+        action: FacetCutAction.Add,
+        functionSelectors: getSelector("RaidHandlerAlt"),
+      });
+    }else{
+      const Facet = await hre.ethers.getContractFactory("RaidHandler");
+      const facet = await Facet.deploy();
+      await facet.waitForDeployment();
+      console.log(`RaidHandler deployed: ${facet.target}`);
+      cut.push({
+        facetAddress: facet.target,
+        action: FacetCutAction.Add,
+        functionSelectors: getSelector("RaidHandler"),
       });
     }
 

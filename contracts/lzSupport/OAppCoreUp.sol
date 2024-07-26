@@ -7,12 +7,13 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { IOAppCore, ILayerZeroEndpointV2 } from "@layerzerolabs/lz-evm-oapp-v2/contracts/oapp/interfaces/IOAppCore.sol";
 import {LzState} from "../Staking/lib/Lz.sol";
+import {LibDiamond} from "../Staking/lib/LibDiamond.sol";
 
 /**
  * @title OAppCore
  * @dev Abstract contract implementing the IOAppCore interface with basic OApp configurations.
  */
-abstract contract OAppCore is IOAppCore, Initializable, UUPSUpgradeable, OwnableUpgradeable {
+abstract contract OAppCore is IOAppCore{
 
     /**
      * @dev Constructor to initialize the OAppCore with the provided endpoint and delegate.
@@ -22,14 +23,12 @@ abstract contract OAppCore is IOAppCore, Initializable, UUPSUpgradeable, Ownable
      * @dev The delegate typically should be set as the owner of the contract.
      */
     function __OAppCore_Init(address _endpoint, address _delegate) public {
+        LibDiamond.enforceIsContractOwner();
         LzState.getStorage().endpoint = ILayerZeroEndpointV2(_endpoint);
 
         if (_delegate == address(0)) revert InvalidDelegate();
-        __Ownable_init(_delegate);
         LzState.getStorage().endpoint.setDelegate(_delegate);
     }
-
-    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
 
     /**
      * @notice Sets the peer address (OApp instance) for a corresponding endpoint.
@@ -41,7 +40,8 @@ abstract contract OAppCore is IOAppCore, Initializable, UUPSUpgradeable, Ownable
      * @dev Set this to bytes32(0) to remove the peer address.
      * @dev Peer is a bytes32 to accommodate non-evm chains.
      */
-    function setPeer(uint32 _eid, bytes32 _peer) public virtual onlyOwner {
+    function setPeer(uint32 _eid, bytes32 _peer) public virtual {
+        LibDiamond.enforceIsContractOwner();
         LzState.getStorage().peers[_eid] = _peer;
         emit PeerSet(_eid, _peer);
     }
@@ -65,7 +65,8 @@ abstract contract OAppCore is IOAppCore, Initializable, UUPSUpgradeable, Ownable
      * @dev Only the owner/admin of the OApp can call this function.
      * @dev Provides the ability for a delegate to set configs, on behalf of the OApp, directly on the Endpoint contract.
      */
-    function setDelegate(address _delegate) public onlyOwner {
+    function setDelegate(address _delegate) public {
+        LibDiamond.enforceIsContractOwner();
         LzState.getStorage().endpoint.setDelegate(_delegate);
     }
 }
