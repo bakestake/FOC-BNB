@@ -41,27 +41,16 @@ task("cut-all", "Deploys and initializes diamond")
     }
 
 
-    if(args.chain == "beraTestnet"){
-      const Facet = await hre.ethers.getContractFactory("RaidHandlerAlt");
-      const facet = await Facet.deploy();
-      await facet.waitForDeployment();
-      console.log(`RaidHandlerAlt deployed: ${facet.target}`);
-      cut.push({
-        facetAddress: facet.target,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelector("RaidHandlerAlt"),
-      });
-    }else{
-      const Facet = await hre.ethers.getContractFactory("RaidHandler");
-      const facet = await Facet.deploy();
-      await facet.waitForDeployment();
-      console.log(`RaidHandler deployed: ${facet.target}`);
-      cut.push({
-        facetAddress: facet.target,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelector("RaidHandler"),
-      });
-    }
+    const Facet = await hre.ethers.getContractFactory("RaidHandler");
+    const facet = await Facet.deploy();
+    await facet.waitForDeployment();
+    console.log(`RaidHandler deployed: ${facet.target}`);
+    cut.push({
+      facetAddress: facet.target,
+      action: FacetCutAction.Add,
+      functionSelectors: getSelector("RaidHandler"),
+    });
+    
 
     // upgrade diamond with facets
     const addresses = getDeployedAddressesForChain(args.chain);

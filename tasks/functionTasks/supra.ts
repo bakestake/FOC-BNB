@@ -15,7 +15,7 @@ task("supra")
 
         console.log("whitelisting")
 
-        //await contractInst.addContractToWhitelist(deployedAddresses?.Staking || "");
+        await contractInst.addContractToWhitelist(deployedAddresses?.Staking || "");
 
         console.log("Whitelisted");
 

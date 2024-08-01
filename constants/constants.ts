@@ -8,10 +8,16 @@ export const ADDRESES = {
     narcSeed: 1,
     boosterSeed: 1,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30109",
+    endpointId: 30109,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x7A4B5a56256163F07b2C80A7cA55aBE66c4ec4d7",
-    pyth:""
+    pyth:"",
+    sendLib:"0xa78A78a13074eD93aD447a26Ec57121f29E8feC2",
+    sendLib2:"0x1d186C560281B8F1AF831957ED5047fD3AB902F9",
+    recLib:"0x88B27057A9e00c5F05DDa29241027afF63f9e6e0",
+    recLib2:"0x53fd4C4fBBd53F6bC58CaE6704b92dB1f360A648",
+    dvn:[""],
+    executor:""
   },
   amoy: {
     chainId: 80002,
@@ -22,10 +28,16 @@ export const ADDRESES = {
     narcSeed: 1,
     boosterSeed: 1,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40267",
+    endpointId: 40267,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
-    pyth:""
+    pyth:"",
+    sendLib:"0xa78A78a13074eD93aD447a26Ec57121f29E8feC2",
+    sendLib2:"0x1d186C560281B8F1AF831957ED5047fD3AB902F9",
+    recLib:"0x88B27057A9e00c5F05DDa29241027afF63f9e6e0",
+    recLib2:"0x53fd4C4fBBd53F6bC58CaE6704b92dB1f360A648",
+    dvn:["0x55c175dd5b039331db251424538169d8495c18d1"],
+    executor:"0x4Cf1B3Fa61465c2c907f82fC488B43223BA0CF93"
   },
   bsc: {
     chainId: 56,
@@ -36,10 +48,16 @@ export const ADDRESES = {
     narcSeed: 301,
     boosterSeed: 2,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30102",
+    endpointId: 30102,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   bscTestnet: {
     chainId: 97,
@@ -50,10 +68,16 @@ export const ADDRESES = {
     narcSeed: 300,
     boosterSeed: 2,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40102",
+    endpointId: 40102,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x68605AD7b15c732a30b1BbC62BE8F2A509D74b4D",
-    pyth:""
+    pyth:"",
+    sendLib:"0x65e2DdD01cf0f1e27090052fF64f061d236206fd",
+    sendLib2:"0x55f16c442907e86D764AFdc2a07C2de3BdAc8BB7",
+    recLib:"0xA4b12509e4267e3139249223c294bB16b6F1578b",
+    recLib2:"0x188d4bbCeD671A7aA2b5055937F79510A32e9683",
+    dvn:["0x0ee552262f7b562efced6dd4a7e2878ab897d405"],
+    executor:"0x31894b190a8bAbd9A067Ce59fde0BfCFD2B18470"
   },
   avalanche: {
     chainId: 43114,
@@ -64,10 +88,16 @@ export const ADDRESES = {
     narcSeed: 601,
     boosterSeed: 3,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30106",
+    endpointId: 30106,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0x54a8e5f9c4CbA08F9943965859F6c34eAF03E26c",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   fuji: {
     chainId: 43113,
@@ -78,10 +108,16 @@ export const ADDRESES = {
     narcSeed: 600,
     boosterSeed: 3,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40106",
+    endpointId: 40106,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x7bbcE28e64B3F8b84d876Ab298393c38ad7aac4C",
-    pyth:""
+    pyth:"",
+    sendLib:"0x184e24e31657Cf853602589fe5304b144a826c85",
+    sendLib2:"0x69BF5f48d2072DfeBc670A1D19dff91D0F4E8170",
+    recLib:"0x91df17bF1Ced54c6169e1E24722C0a88a447cBAf",
+    recLib2:"0x819F0FAF2cb1Fba15b9cB24c9A2BDaDb0f895daf",
+    dvn:["0x9f0e79aeb198750f963b6f30b99d87c6ee5a0467"],
+    executor:"0xa7BFA9D51032F82D649A501B6a1f922FC2f7d4e3"
   },
   arbitrum: {
     chainId: 42161,
@@ -92,10 +128,16 @@ export const ADDRESES = {
     narcSeed: 901,
     boosterSeed: 4,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30110",
+    endpointId: 30110,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   arbSepolia: {
     chainId: 421614,
@@ -106,10 +148,16 @@ export const ADDRESES = {
     narcSeed: 900,
     boosterSeed: 4,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40231",
+    endpointId: 40231,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
-    pyth:""
+    pyth:"",
+    sendLib:"0x92709d5BAc33547482e4BB7dd736f9a82b029c40",
+    sendLib2:"0x4f7cd4DA19ABB31b0eC98b9066B9e857B1bf9C0E",
+    recLib:"0xa673a180fB2BF0E315b4f832b7d5b9ACB7162273",
+    recLib2:"0x75Db67CDab2824970131D5aa9CECfC9F69c69636",
+    dvn:["0x53f488e93b4f1b60e8e83aa374dbe1780a1ee8a8"],
+    executor:"0x5Df3a1cEbBD9c8BA7F8dF51Fd632A9aef8308897"
   },
   optimism: {
     chainId: 42161,
@@ -120,10 +168,16 @@ export const ADDRESES = {
     narcSeed: 1501,
     boosterSeed: 0,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30111",
+    endpointId: 30111,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   opGoerli: {
     chainId: 42161,
@@ -134,10 +188,16 @@ export const ADDRESES = {
     narcSeed: 1501,
     boosterSeed: 0,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40102",
+    endpointId: 40102,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x6b9C8671cdDC8dEab9c719bB87cBd3e782bA6a35",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   base: {
     chainId: 42161,
@@ -148,10 +208,16 @@ export const ADDRESES = {
     narcSeed: 1501,
     boosterSeed: 0,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "30184",
+    endpointId: 30184,
     lzEndpoint: "0x1a44076050125825900e736c501f859c50fe728c",
     wormhole: "0xbebdb6C8ddC678FfA9f8748f85C815C556Dd8ac6",
-    pyth:""
+    pyth:"",
+    sendLib:"",
+    sendLib2:"",
+    recLib:"",
+    recLib2:"",
+    dvn:[""],
+    executor:""
   },
   baseSpolia: {
     chainId: 84532,
@@ -162,38 +228,56 @@ export const ADDRESES = {
     narcSeed: 1200,
     boosterSeed: 5,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40245",
+    endpointId: 40245,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0x79A1027a6A159502049F10906D333EC57E95F083",
-    pyth:""
+    pyth:"",
+    sendLib:"0x53fd4C4fBBd53F6bC58CaE6704b92dB1f360A648",
+    sendLib2:"0xC1868e054425D378095A003EcbA3823a5D0135C9",
+    recLib:"0x9eCf72299027e8AeFee5DC5351D6d92294F46d2b",
+    recLib2:"0x12523de19dc41c91F7d2093E0CFbB76b17012C8d",
+    dvn:["0xe1a12515f9ab2764b887bf60b923ca494ebbb2d6"],
+    executor:"0x8A3D588D9f6AC041476b094f97FF94ec30169d3D"
   },
   bera_batrio: {
     chainId: 80085,
     raidFees: "0.005",
-    supraRouter: "0x23726e27Ec79d421cf58C815D37748AfCaFeC9e4",
-    supraDeposite: "0xEAc4A79C6a97c312604EAFdCCbC18171FB9c83b0",
+    supraRouter: "0x6D46C098996AD584c9C40D6b4771680f54cE3726",
+    supraDeposite: "0x3B5F96986389f6BaCF58d5b69425fab000D3551e",
     farmerSeed: 3500,
     narcSeed: 1500,
     boosterSeed: 6,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40291",
+    endpointId: 40291,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd",
-    pyth:"0x36825bf3Fbdf5a29E2d5148bfe7Dcf7B5639e320"
+    pyth:"0x36825bf3Fbdf5a29E2d5148bfe7Dcf7B5639e320",
+    sendLib:"0xB0487596a0B62D1A71D0C33294bd6eB635Fc6B09",
+    sendLib2:"0xd682ECF100f6F4284138AA925348633B0611Ae21",
+    recLib:"0x073f5b4FdF17BBC16b0980d49f6C56123477bb51",
+    recLib2:"0xcF1B0F4106B0324F96fEfcC31bA9498caa80701C",
+    dvn:["0xf49d162484290eaead7bb8c2c7e3a6f8f52e32d6"],
+    executor:"0x55c175DD5b039331dB251424538169D8495C18d1"
   },
   coreTestnet: {
     chainId: 1115,
     raidFees: "0.005",
-    supraRouter: "0x23726e27Ec79d421cf58C815D37748AfCaFeC9e4",
-    supraDeposite: "0xEAc4A79C6a97c312604EAFdCCbC18171FB9c83b0",
+    supraRouter: "0x6D46C098996AD584c9C40D6b4771680f54cE3726",
+    supraDeposite: "0x3B5F96986389f6BaCF58d5b69425fab000D3551e",
     farmerSeed: 4200,
     narcSeed: 1800,
     boosterSeed: 7,
     minter: "0x066a697f575ca96AafA54D3b6eC1a33A062B83bd",
-    endpointId: "40153",
+    endpointId: 40153,
     lzEndpoint: "0x6EDCE65403992e310A62460808c4b910D972f10f",
     wormhole: "0xBB73cB66C26740F31d1FabDC6b7A46a038A300dd",
-    pyth:""
+    pyth:"",
+    sendLib:"0x73B2dCB13A27e893c249d8240e9179f2C5FEcf7E",
+    sendLib2:"0xc8361Fac616435eB86B9F6e2faaff38F38B0d68C",
+    recLib:"0xaBfa1F7c3586eaFF6958DC85BAEbBab7D3908fD2",
+    recLib2:"0xD1bbdB62826eDdE4934Ff3A4920eB053ac9D5569",
+    dvn:["0xae9bbf877bf1bd41edd5dfc3473d263171cf3b9e"],
+    executor:"0x3Bdb89Df44e50748fAed8cf851eB25bf95f37d19"
   },
 
 };

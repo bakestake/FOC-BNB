@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 import "../lib/LibDiamond.sol";
 import "../lib/LidGlobalDataState.sol";
+import { ISupraRouter } from "../../interfaces/ISupraRouter.sol";
+
 import {IRaidHandler} from "../../interfaces/IRaidHandler.sol";
 
 /// TODO - add more setters
@@ -74,6 +76,11 @@ contract GetterSetterFacet {
     function setRaidHandler(address _address) external {
         if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
         LibGlobalVarState.interfaceStore()._raidHandler = IRaidHandler(_address);
+    }
+
+    function setSupraAddress(address _address) external {
+        if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
+        LibGlobalVarState.interfaceStore()._supraRouter = ISupraRouter(_address);
     }
 
     function setTreasury(address payable newAddress) external {

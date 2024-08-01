@@ -19,7 +19,7 @@ task("raid")
 
         console.log("raiding")
 
-        await contractInst.raid(taskArgs.token, {value:hre.ethers.parseEther("0.005")});
+        await contractInst.raid(taskArgs.token, {value:hre.ethers.parseEther("0.005"), gasLimit:"1500000"});
 
     }catch(error){
         console.log("Failed to raid : ",error)

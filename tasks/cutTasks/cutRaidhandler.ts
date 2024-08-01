@@ -3,6 +3,7 @@ import {FacetCutAction} from "../../scripts/getFacetCutAction";
 import {getDeployedAddressesForChain} from "../../scripts/libraries/getDeployedAddresses";
 import {getSelector} from "../../scripts/selectors";
 import {getConstants} from "../../scripts/libraries/getConstants";
+import { AddressLike } from "ethers";
 
 task("raid-facet")
   .addParam("chain")
@@ -16,36 +17,48 @@ task("raid-facet")
       diamondAddress
     );
 
+    const DiamondInit = await hre.ethers.getContractFactory("DiamondInit");
+    const diamondInit = await DiamondInit.deploy();
+    await diamondInit.waitForDeployment();
+    console.log("DiamondInit deployed:", diamondInit.target);
+
+    const addresses = getDeployedAddressesForChain(args.chain);
+
+    let params = [];
+    const constants = await getConstants(args.chain);
+    const tokenAddresses: AddressLike[] = [
+      addresses?.BudsToken || "",
+      addresses?.Farmer || "",
+      addresses?.Narcs || "",
+      addresses?.Stoner || "",
+      addresses?.Informant || "",
+    ];
+    params.push(tokenAddresses);
+    params.push(constants?.wormhole);
+    params.push(addresses?.budsVault || "");
+    params.push(constants?.supraRouter)
+    params.push(constants?.minter || "");
+    params.push(constants?.chainId);
+
+    let functionCall = diamondInit.interface.encodeFunctionData("init", params);
+
     let cut = [];
 
-    if(args.chain == "beraTestnet"){
-      const chainFacet = await hre.ethers.getContractFactory("RaidHandlerAlt");
-      const facet = await chainFacet.deploy();
-      await facet.waitForDeployment();
+    const chainFacet = await hre.ethers.getContractFactory("RaidHandler");
+    const facet = await chainFacet.deploy();
+    await facet.waitForDeployment();
 
-      console.log("Deployed on:", facet.target);
+    console.log("Deployed on:", facet.target);
 
-      cut.push({
-        facetAddress: facet.target,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelector("RaidHandlerAlt"),
-      });
-    }else{
-      const chainFacet = await hre.ethers.getContractFactory("RaidHandler");
-      const facet = await chainFacet.deploy();
-      await facet.waitForDeployment();
-
-      console.log("Deployed on:", facet.target);
-      cut.push({
-        facetAddress: facet.target,
-        action: FacetCutAction.Replace,
-        functionSelectors: getSelector("RaidHandler"),
-      });
-    }
-
+    cut.push({
+      facetAddress: facet.target,
+      action: FacetCutAction.Replace,
+      functionSelectors: getSelector("RaidHandler"),
+    });
+    
     console.log("Cutting diamond ");
 
-    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""));
+    let tx = await cutContract.diamondCut(cut, diamondInit.target, functionCall);
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 

@@ -295,12 +295,10 @@ library LibGlobalVarState {
                 riskLevel: 0
             })
         );
-        uint256 nonce = LibGlobalVarState.interfaceStore()._supraRouter.generateRequest(
-            "sendRaidResult(uint256,uint256[])",
-            1,
-            1,
-            0xfA9ba6ac5Ec8AC7c7b4555B5E8F44aAE22d7B8A8
-        );
+        address provider = LibGlobalVarState.interfaceStore().entropy.getDefaultProvider();
+
+        uint fee = LibGlobalVarState.interfaceStore().entropy.getFee(provider);
+        uint64 sequenceNumber = LibGlobalVarState.interfaceStore().entropy.requestWithCallback{value: fee}(provider, bytes32(LibGlobalVarState.intStore().localStakedBudsCount));
     }
 
     function raidPoolCustom(uint256 tokenId, address _raider, uint256 riskLevel) internal {
@@ -327,12 +325,10 @@ library LibGlobalVarState {
                 riskLevel: riskLevel
             })
         );
-        uint256 nonce = LibGlobalVarState.interfaceStore()._supraRouter.generateRequest(
-            "sendRaidResult(uint256,uint256[])",
-            1,
-            1,
-            0xfA9ba6ac5Ec8AC7c7b4555B5E8F44aAE22d7B8A8
-        );
+        address provider = LibGlobalVarState.interfaceStore().entropy.getDefaultProvider();
+
+        uint fee = LibGlobalVarState.interfaceStore().entropy.getFee(provider);
+        uint64 sequenceNumber = LibGlobalVarState.interfaceStore().entropy.requestWithCallback{value: fee}(provider, bytes32(LibGlobalVarState.intStore().localStakedBudsCount));
     }
 
     function finalizeRaid(address raider, bool isSuccess, bool isboosted, uint256 raidLevel, uint256 _boosts) internal{
