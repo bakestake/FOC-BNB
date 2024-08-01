@@ -1,0 +1,1 @@
+export const getChains = () => { return ["fuji", "arbSepolia", "bscTestnet","amoy", "baseSepolia","beraTestnet"/*,"coreTestnet","baseSepolia"*/]}
