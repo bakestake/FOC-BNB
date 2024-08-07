@@ -37,6 +37,7 @@ contract GetterSetterFacet {
     }
 
     function setGlobalStakedBuds(uint256 liquidity) public {
+        if(LibDiamond.contractOwner() != msg.sender) revert ("Only owner");
         LibGlobalVarState.intStore().globalStakedBudsCount = liquidity;
     }
 

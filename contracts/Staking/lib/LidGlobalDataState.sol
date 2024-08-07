@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import {IBudsToken} from "../../interfaces/IBudsToken.sol";
+import {IStBuds} from "../../interfaces/IStBuds.sol";
 import {IChars} from "../../interfaces/IChars.sol";
 import {IBoosters} from "../../interfaces/IBooster.sol";
 import {IRaidHandler} from "../../interfaces/IRaidHandler.sol";
@@ -113,7 +114,8 @@ library LibGlobalVarState {
         IRaidHandler _raidHandler;
         IBudsVault _budsVault;
         ISupraRouter _supraRouter;
-        IEntropy entropy;
+        IEntropy entropy; //TODO :- remove later
+        IStBuds _stBuds;
     }
 
     struct Integers {

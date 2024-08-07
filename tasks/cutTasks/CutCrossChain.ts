@@ -16,10 +16,10 @@ task("cross-chain-facet")
       diamondAddress
     );
 
-    const DiamondInit = await hre.ethers.getContractFactory("LzInit");
-    const diamondInit = await DiamondInit.deploy();
-    await diamondInit.waitForDeployment();
-    console.log("DiamondInit deployed:", diamondInit.target);
+    // const DiamondInit = await hre.ethers.getContractFactory("LzInit");
+    // const diamondInit = await DiamondInit.deploy();
+    // await diamondInit.waitForDeployment();
+    // console.log("DiamondInit deployed:", diamondInit.target);
 
     const chainFacet = await hre.ethers.getContractFactory("CrossChainFacet");
     const facet = await chainFacet.deploy();
@@ -39,10 +39,10 @@ task("cross-chain-facet")
 
     const constants = await getConstants(args.chain);
 
-    console.log("initializing");
-    let functionCall = diamondInit.interface.encodeFunctionData("init", [constants?.lzEndpoint]);
+    //console.log("initializing");
+    //let functionCall = diamondInit.interface.encodeFunctionData("init", [constants?.lzEndpoint]);
 
-    let tx = await cutContract.diamondCut(cut, diamondInit.target, functionCall, {gasLimit:2500000});
+    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""), {gasLimit:2500000});
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 

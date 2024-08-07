@@ -34,6 +34,7 @@ contract ChainFacet is IERC721Receiver {
 
         if(_budsAmount != 0){
             bool res = LibGlobalVarState.interfaceStore()._budsToken.transferFrom(msg.sender, address(this), _budsAmount);
+            LibGlobalVarState.interfaceStore()._stBuds.mintTo(msg.sender, _budsAmount);
             require(res);
         } 
         emit LibGlobalVarState.Staked(msg.sender, _farmerTokenId, _budsAmount, block.timestamp, LibGlobalVarState.intStore().localStakedBudsCount, LibGlobalVarState.getCurrentApr()
@@ -69,6 +70,7 @@ contract ChainFacet is IERC721Receiver {
 
             stk.budsAmount += amountBoosted;
             LibGlobalVarState.mappingStore().stakeRecord[msg.sender][stakeIndex] = stk;
+            LibGlobalVarState.interfaceStore()._budsVault.sendBudsTo(address(this), amountBoosted);
             LibGlobalVarState.interfaceStore()._stonerToken.burnFrom(tokenId);
         } else {
             revert LibGlobalVarState.MaxBoostReached();
@@ -95,6 +97,7 @@ contract ChainFacet is IERC721Receiver {
 
     function unStakeBuds(uint256 _budsAmount) public {
         if(_budsAmount < 1 ether) revert LibGlobalVarState.InvalidData();
+        if(LibGlobalVarState.interfaceStore()._stBuds.balanceOf(msg.sender) < _budsAmount)
         if (block.timestamp - LibGlobalVarState.mappingStore().stakeRecord[msg.sender][0].timeStamp > 1 days) revert ("Claim first");
         
         uint256 len = LibGlobalVarState.mappingStore().stakeRecord[msg.sender].length;

@@ -16,6 +16,7 @@ import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol
 import { LibGlobalVarState } from "../lib/LidGlobalDataState.sol";
 import { IBoosters } from "../../interfaces/IBooster.sol";
 import { IBudsToken } from "../../interfaces/IBudsToken.sol";
+import { IStBuds } from "../../interfaces/IStBuds.sol";
 import { IChars } from "../../interfaces/IChars.sol";
 import { IBudsVault } from "../../interfaces/IBudsVault.sol";
 import { ISupraRouter } from "../../interfaces/ISupraRouter.sol";
@@ -36,7 +37,7 @@ contract DiamondInit is QueryResponse {
     // You can add parameters to this function in order to pass in
     // data to set your own state variables
     function init(
-        address[5] memory _tokenAddresses,
+        address[6] memory _tokenAddresses,
         address _wormhole,
         address budsVault,
         address supra,
@@ -66,11 +67,13 @@ contract DiamondInit is QueryResponse {
         LibGlobalVarState.interfaceStore()._informantToken = IAsset(_tokenAddresses[4]);
         LibGlobalVarState.interfaceStore()._budsVault = IBudsVault(budsVault);
         LibGlobalVarState.interfaceStore()._supraRouter = ISupraRouter(supra);
+        LibGlobalVarState.interfaceStore()._stBuds = IStBuds(_tokenAddresses[5]);
 
         LibGlobalVarState.mappingStore().tokenByTokenNumber[1] = LibGlobalVarState.interfaceStore()._stonerToken;
         LibGlobalVarState.mappingStore().tokenByTokenNumber[2] = LibGlobalVarState.interfaceStore()._informantToken;
         LibGlobalVarState.mappingStore().tokenByTokenNumber[3] = LibGlobalVarState.interfaceStore()._farmerToken;
         LibGlobalVarState.mappingStore().tokenByTokenNumber[4] = LibGlobalVarState.interfaceStore()._narcToken;
+
 
         wormhole = IWormhole(_wormhole);
     }

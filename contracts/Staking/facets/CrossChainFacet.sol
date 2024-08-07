@@ -41,7 +41,7 @@ contract CrossChainFacet is OApp {
             LzState.getStorage().CROSS_CHAIN_STAKE_MESSAGE,
             abi.encode(_budsAmount, _farmerTokenId, msg.sender)
         );
-        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_000_000, 0);
+        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 500_000, 0);
         MessagingFee memory ccmFees = _quote(destChainId, payload, options, false);
 
         if (msg.value < ccmFees.nativeFee) revert LibGlobalVarState.InsufficientFees();
