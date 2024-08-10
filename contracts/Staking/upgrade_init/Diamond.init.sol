@@ -54,7 +54,7 @@ contract DiamondInit is QueryResponse {
         LibGlobalVarState.bytesStore().GetLocalSelector = bytes4(hex"4269e94c");
 
         LibGlobalVarState.intStore().baseAPR = 50;
-        LibGlobalVarState.intStore().noOfChains = 5;
+        LibGlobalVarState.intStore().noOfChains = 6;
         LibGlobalVarState.intStore().raidFees = 5000000000000000;
         LibGlobalVarState.intStore().myChainID = chainId;
 

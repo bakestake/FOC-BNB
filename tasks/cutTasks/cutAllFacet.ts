@@ -26,7 +26,7 @@ task("cut-all", "Deploys and initializes diamond")
     // // deploy facets
     // console.log("");
     console.log("Deploying facets");
-    const FacetNames = ["DiamondLoupeFacet","ChainFacet","CrossChainFacet","GetterSetterFacet","BurnFacet","StateUpdate"];
+    const FacetNames = ["DiamondLoupeFacet","ChainFacet","CrossChainFacet","GetterSetterFacet","BurnFacet","StateUpdate","RaidHandler"];
     const cut = [];
     for (const FacetName of FacetNames) {
       const Facet = await hre.ethers.getContractFactory(FacetName);
@@ -35,22 +35,10 @@ task("cut-all", "Deploys and initializes diamond")
       console.log(`${FacetName} deployed: ${facet.target}`);
       cut.push({
         facetAddress: facet.target,
-        action: FacetCutAction.Add,
+        action: FacetCutAction.Replace,
         functionSelectors: getSelector(FacetName),
       });
     }
-
-
-    const Facet = await hre.ethers.getContractFactory("RaidHandler");
-    const facet = await Facet.deploy();
-    await facet.waitForDeployment();
-    console.log(`RaidHandler deployed: ${facet.target}`);
-    cut.push({
-      facetAddress: facet.target,
-      action: FacetCutAction.Add,
-      functionSelectors: getSelector("RaidHandler"),
-    });
-    
 
     // upgrade diamond with facets
     const addresses = getDeployedAddressesForChain(args.chain);
@@ -70,6 +58,7 @@ task("cut-all", "Deploys and initializes diamond")
       addresses?.Narcs || "",
       addresses?.Stoner || "",
       addresses?.Informant || "",
+      addresses?.stBuds || ""
     ];
     params.push(tokenAddresses);
     params.push(constants?.wormhole);

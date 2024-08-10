@@ -15,7 +15,7 @@ task("set-peers")
 
         const chains = getChains();
 
-        for(let i = 5; i < chains.length; i++){
+        for(let i = 0; i < chains.length; i++){
             if(taskArgs.chain == chains[i]) continue
 
             console.log("Setting peer")

@@ -240,7 +240,7 @@ export const ADDRESES = {
     executor:"0x8A3D588D9f6AC041476b094f97FF94ec30169d3D"
   },
   bera_batrio: {
-    chainId: 80085,
+    chainId: 80084,
     raidFees: "0.005",
     supraRouter: "0x6D46C098996AD584c9C40D6b4771680f54cE3726",
     supraDeposite: "0x3B5F96986389f6BaCF58d5b69425fab000D3551e",

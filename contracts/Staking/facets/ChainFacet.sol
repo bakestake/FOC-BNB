@@ -97,7 +97,7 @@ contract ChainFacet is IERC721Receiver {
 
     function unStakeBuds(uint256 _budsAmount) public {
         if(_budsAmount < 1 ether) revert LibGlobalVarState.InvalidData();
-        if(LibGlobalVarState.interfaceStore()._stBuds.balanceOf(msg.sender) < _budsAmount)
+        if(LibGlobalVarState.interfaceStore()._stBuds.balanceOf(msg.sender) < _budsAmount) revert ("Low St Buds");
         if (block.timestamp - LibGlobalVarState.mappingStore().stakeRecord[msg.sender][0].timeStamp > 1 days) revert ("Claim first");
         
         uint256 len = LibGlobalVarState.mappingStore().stakeRecord[msg.sender].length;
@@ -127,6 +127,7 @@ contract ChainFacet is IERC721Receiver {
         LibGlobalVarState.intStore().globalStakedBudsCount -= _budsAmount;
 
         bool res = LibGlobalVarState.interfaceStore()._budsToken.transfer(msg.sender, _budsAmount);
+        LibGlobalVarState.interfaceStore()._stBuds.burnFrom(msg.sender, _budsAmount);
         require(res);
 
         emit LibGlobalVarState.UnStaked(
@@ -153,6 +154,7 @@ contract ChainFacet is IERC721Receiver {
             staked += stk.budsAmount;
             stk.timeStamp = block.timestamp;
         }
+        if(LibGlobalVarState.interfaceStore()._stBuds.balanceOf(msg.sender) < staked) revert ("Low St Buds");
 
         LibGlobalVarState.intStore().localStakedBudsCount -= staked;
         LibGlobalVarState.intStore().globalStakedBudsCount -= staked;
@@ -165,6 +167,7 @@ contract ChainFacet is IERC721Receiver {
         }
 
         bool res = LibGlobalVarState.interfaceStore()._budsToken.transfer(msg.sender, staked);
+        LibGlobalVarState.interfaceStore()._stBuds.burnFrom(msg.sender, staked);
         require(res);
 
         LibGlobalVarState.interfaceStore()._budsVault.sendBudsTo(msg.sender, rewards);

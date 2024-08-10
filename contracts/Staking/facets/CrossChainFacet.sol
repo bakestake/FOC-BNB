@@ -41,7 +41,7 @@ contract CrossChainFacet is OApp {
             LzState.getStorage().CROSS_CHAIN_STAKE_MESSAGE,
             abi.encode(_budsAmount, _farmerTokenId, msg.sender)
         );
-        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 500_000, 0);
+        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_500_000, 0);
         MessagingFee memory ccmFees = _quote(destChainId, payload, options, false);
 
         if (msg.value < ccmFees.nativeFee) revert LibGlobalVarState.InsufficientFees();
@@ -65,7 +65,7 @@ contract CrossChainFacet is OApp {
             LzState.getStorage().CROSS_CHAIN_RAID_MESSAGE,
             abi.encode(tokenId, 0, msg.sender)
         );
-        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_000_000, 0);
+        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_500_000, 0);
         MessagingFee memory ccmFees = _quote(destChainId, payload, options, false);
 
         if (msg.value - LibGlobalVarState.intStore().raidFees < ccmFees.nativeFee)
@@ -88,7 +88,7 @@ contract CrossChainFacet is OApp {
             LzState.getStorage().CROSS_CHAIN_BUDS_TRANSFER,
             abi.encode(0, _amount, msg.sender, _to)
         );
-        bytes memory _options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_000_000, 0);
+        bytes memory _options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_500_000, 0);
         MessagingFee memory transferFee = _quote(_dstEid, _payload, bytes("0"), false);
 
         if (msg.value < transferFee.nativeFee) revert LibGlobalVarState.InsufficientFees();
@@ -113,7 +113,7 @@ contract CrossChainFacet is OApp {
             LzState.getStorage().CROSS_CHAIN_NFT_TRANSFER,
             abi.encode(tokenNumber, tokenId, msg.sender, _to)
         );
-        bytes memory _options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_000_000, 0);
+        bytes memory _options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_500_000, 0);
         MessagingFee memory transferFee = _quote(_dstEid, _payload, bytes("0"), false);
 
         if (msg.value < transferFee.nativeFee) revert LibGlobalVarState.InsufficientFees();
@@ -156,6 +156,7 @@ contract CrossChainFacet is OApp {
         if (messageType == LzState.getStorage().CROSS_CHAIN_BUDS_TRANSFER) {
             (, uint amount, , address to) = abi.decode(_data, (uint8, uint, address, address));
             LibGlobalVarState.interfaceStore()._budsToken.mintTo(to, amount);
+            return;
         }
 
         if (messageType == LzState.getStorage().CROSS_CHAIN_NFT_TRANSFER) {
@@ -163,6 +164,7 @@ contract CrossChainFacet is OApp {
             if (tokenNumber < 1 || tokenNumber > 4) revert LibGlobalVarState.InvalidTokenNumber();
             IAsset assetToReceive = LibGlobalVarState.mappingStore().tokenByTokenNumber[tokenNumber];
             assetToReceive.mintTokenId(to, tokenID);
+            return;
         }
     }
 

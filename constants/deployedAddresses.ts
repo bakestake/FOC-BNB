@@ -14,6 +14,7 @@ export const DeployedAddresses = {
     budsVault: "0xef04C8b78f09Cc3e30D2CAE17574B878f4e6C64B",
     DiamondCut: "",
     DiamondLoupe: "",
+    stBuds:"",
   },
   amoy: {
     BudsToken: "0xa1c202dfD7E2C97c33060a17d41C654d234A441e", 
@@ -30,6 +31,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"",
   },
   bsc: {
     BudsToken: "",
@@ -46,6 +48,7 @@ export const DeployedAddresses = {
     budsVault: "0x046c17f7a72AE9475f42B1210b1086f801bb1EF8",
     DiamondCut: "",
     DiamondLoupe: "",
+    stBuds:"",
   },
   bscTestnet: {
     BudsToken: "0xa1c202dfD7E2C97c33060a17d41C654d234A441e", 
@@ -62,6 +65,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"",
   },
   avalanche: {
     BudsToken: "",
@@ -78,6 +82,7 @@ export const DeployedAddresses = {
     budsVault: "0x046c17f7a72AE9475f42B1210b1086f801bb1EF8",
     DiamondCut: "",
     DiamondLoupe: "",
+    stBuds:"",
   },
   fuji: {
     BudsToken: "0xa1c202dfD7E2C97c33060a17d41C654d234A441e", 
@@ -94,6 +99,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"",
   },
   arbitrum: {
     BudsToken: "",
@@ -110,6 +116,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "",
     DiamondLoupe: "",
+    stBuds:"",
   },
   arbSepolia: {
     BudsToken: "0xa1c202dfD7E2C97c33060a17d41C654d234A441e", 
@@ -126,6 +133,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"",
   },
   bera_batrio: {
     BudsToken: "0xAc928BF50E248485189A2bcd3BBC6618b5b63ba0", 
@@ -142,6 +150,7 @@ export const DeployedAddresses = {
     budsVault: "0x75a88a3b0a3f2aB64E615480430B94Bd8f9c23E0",
     DiamondCut: "0x67537425b0cf3fC5327014B97fa4Dc3A1A36023B",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"0xAc928BF50E248485189A2bcd3BBC6618b5b63ba0",//dummyy
   },
   baseSepolia: {
     BudsToken: "0xa1c202dfD7E2C97c33060a17d41C654d234A441e", 
@@ -158,6 +167,7 @@ export const DeployedAddresses = {
     budsVault: "0x701fa7a9AAb379A9025f4449d3c8Ed068bA83a33",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
+    stBuds:"",
   },
   coreTestnet: {
     BudsToken: "0x874cD9Add18d8F09cf75a094Adb7Aa6bcF428d8D", 
@@ -174,4 +184,5 @@ export const DeployedAddresses = {
     budsVault: "0xef04C8b78f09Cc3e30D2CAE17574B878f4e6C64B",
     DiamondCut: "0x967997ab118ab254Ff93113B10DEe23EdFba5a80",
     DiamondLoupe: "0xcDC57406e8618E7c0328d570B87456f772e58Cc3",
-}}
+    stBuds:"",
+  }}
