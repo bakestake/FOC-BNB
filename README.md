@@ -26,7 +26,7 @@ Users can do following operations despite :-
   4. **Play PvP minigames** against other players.
   5. **bridge tokens and NFTs** from one chain to another chain in game itself.
 
-# Feautures :-
+## Feautures :-
   ![image](https://github.com/user-attachments/assets/d25f5c3d-2dd7-4240-8ff6-fe80cdeba359)
 
   1. **Social logins** - Login with gmail address and other accounts.
@@ -34,7 +34,7 @@ Users can do following operations despite :-
   3. **Multiplayer Lobbies** - Multiplayer lobbies for mini games.
   4. **Cross chain transaction in-game** - No switching wallets or managing assets on different chains. users can do cross chain transactions from any chain to any chain.
 
-# Behind the scenes :-
+## Behind the scenes :-
   ![image](https://github.com/user-attachments/assets/c14aeccc-d06f-43c6-93cd-dde0ad493869)
 
   1. Composable game assets for saving users time and money.
