@@ -31,11 +31,6 @@ contract Informant is
 
     string public uri;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
     function initialize(uint256 seed, address _stakingAddress, string memory _uri) public initializer {
         __ERC721_init("Bakeland Informant", "INFORMANT");
         __ERC721Enumerable_init();

@@ -23,8 +23,8 @@ task("cut-all", "Deploys and initializes diamond")
     await diamondInit.waitForDeployment();
     console.log("DiamondInit deployed:", diamondInit.target);
 
-    // // deploy facets
-    // console.log("");
+    // deploy facets
+    console.log("");
     console.log("Deploying facets");
     const FacetNames = ["DiamondLoupeFacet","ChainFacet","CrossChainFacet","GetterSetterFacet","BurnFacet","StateUpdate","RaidHandler"];
     const cut = [];
@@ -35,14 +35,14 @@ task("cut-all", "Deploys and initializes diamond")
       console.log(`${FacetName} deployed: ${facet.target}`);
       cut.push({
         facetAddress: facet.target,
-        action: FacetCutAction.Replace,
+        action: FacetCutAction.Add,
         functionSelectors: getSelector(FacetName),
       });
     }
 
     // upgrade diamond with facets
     const addresses = getDeployedAddressesForChain(args.chain);
-    // console.log("");
+    // // console.log("");
     console.log("Diamond Cut:", cut);
 
     const diamondCut = await hre.ethers.getContractAt(

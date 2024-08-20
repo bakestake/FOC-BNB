@@ -7,10 +7,19 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
-import {IStaking} from "../interfaces/IStaking.sol";
-import {IBudsVault} from "../interfaces/IBudsVault.sol";
 
-contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
+interface IBudsVault {
+    function sendBudsTo(address to, uint256 amount) external;
+}
+
+interface IStaking {
+    function getUserStakes(address userAddress) external returns (uint256 budsAmount, uint256 tokenId);
+}
+
+/// @title XP token
+/// @author @Rushikesh0125
+/// @notice Contract responsible for XP token contract
+contract XP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     error ZeroAddress();
     error InvalidParam();
     error ClaimOnlyAfterADay();
@@ -18,7 +27,8 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     mapping(address account => uint256) private _balances;
 
     mapping(address account => mapping(address spender => uint256)) private _allowances;
-
+    
+    /// Keeps track of last XP claim by user
     mapping(address => uint) public lastClaimBy;
 
     uint256 private _totalSupply;
@@ -26,24 +36,27 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     string private _name;
     string private _symbol;
 
+    /// Instances of buds vault and staking contract
     IBudsVault public _budsvault;
     IStaking public _stakingContract;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
-    function initialize(address budsVault) public initializer {
-        if (budsVault == address(0)) {
+    /// @notice Initializer function
+    /// @param budsVault Address of buds vault
+    /// @param _staking Address of staking contract
+    function initialize(address budsVault, address _staking) public initializer {
+        if (budsVault == address(0) || _staking == address(0)) {
             revert ZeroAddress();
         }
-        _name = "SNB XP Token";
-        _symbol = "SNBXP";
+        __Ownable_init(msg.sender);
+        _name = "Bakelandd XP Token";
+        _symbol = "BXP";
         _budsvault = IBudsVault(budsVault);
+        _stakingContract = IStaking(_staking);
     }
 
-    function setStaking(address _address) external {
+    /// @param _address Function to set staking contract address
+    /// @dev Only callable by owner
+    function setStaking(address _address) external onlyOwner {
         if(_address == address(0)) revert ZeroAddress();
         _stakingContract  = IStaking(_address);
     }
@@ -78,6 +91,8 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         return true;
     }
 
+    /// @param amount Amount of XP to be burnt 
+    /// @notice Function to burn XP for Buds
     function burnForBuds(uint256 amount) external returns (uint256 budsRewarded) {
         if (amount < 1000 || amount < balanceOf(msg.sender))
             revert IERC20Errors.ERC20InsufficientBalance(msg.sender, amount, 1000 ether);
@@ -93,6 +108,8 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _burn(owner, amount);
     }
 
+    /// @param amount Amount of XP 
+    /// @notice Calculates amount of buds to be rewarded to user for burning specific amount of XP
     function calculateBudsForXP(uint256 amount) public pure returns (uint256 budsReward) {
         if (amount <= 0) {
             revert InvalidParam();
@@ -100,6 +117,7 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         budsReward = amount / 1000;
     }
 
+    /// @notice Function to claim XP every day
     function claimXP() public returns (uint256 xpToMint) {
         if (lastClaimBy[msg.sender] < 1 days) revert ClaimOnlyAfterADay();
         lastClaimBy[msg.sender] = block.timestamp;
@@ -107,8 +125,10 @@ contract SNBXP is Initializable, UUPSUpgradeable, OwnableUpgradeable {
         _mint(msg.sender, xpToMint);
     }
 
+    /// @notice Function to calculate amount of XP to be claimed by user
+    /// Depends on users Stake
     function calculateXp(address userAddress) internal returns (uint256 xpToMint) {
-        (, uint256 budsAmount, uint256 tokenId) = _stakingContract.getstakingRecord(userAddress);
+        (uint256 budsAmount, uint256 tokenId) = _stakingContract.getUserStakes(userAddress);
         xpToMint += 10;
         xpToMint += (budsAmount / 1000);
         xpToMint += tokenId == 0 ? 0 : 10;

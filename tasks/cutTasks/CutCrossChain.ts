@@ -42,7 +42,7 @@ task("cross-chain-facet")
     console.log("initializing");
     let functionCall = diamondInit.interface.encodeFunctionData("init", [constants?.lzEndpoint]);
 
-    let tx = await cutContract.diamondCut(cut, hre.ethers.ZeroAddress, hre.ethers.id(""), {gasLimit:2500000});
+    let tx = await cutContract.diamondCut(cut, diamondInit.target, functionCall, {gasLimit:2500000});
     console.log("Diamond cut tx: ", tx.hash);
     let receipt = await tx.wait();
 

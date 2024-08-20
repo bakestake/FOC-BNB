@@ -1,5 +1,5 @@
 import { task } from "hardhat/config";
-import { getDeployedAddressesForChain } from "../../scripts/libraries/getDeployedAddresses";
+import { getDeployedAddressesForChain } from "../../../scripts/libraries/getDeployedAddresses";
 
 task("get-stake")
 .addParam("chain")

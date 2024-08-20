@@ -20,8 +20,8 @@ export const getDeployedAddressesForChain = (networkName: string) => {
       return DeployedAddresses.arbSepolia;
     case "beraTestnet":
       return DeployedAddresses.bera_batrio;
-    case "coreTestnet":
-      return DeployedAddresses.coreTestnet;
+    // case "coreTestnet":
+    //   return DeployedAddresses.coreTestnet;
     case "baseSepolia":
       return DeployedAddresses.baseSepolia;
   }

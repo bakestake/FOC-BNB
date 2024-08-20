@@ -18,9 +18,9 @@ task("fund-vault")
         const BudsVaultInst = await hre.ethers.getContractAt("BudsVault", deployedAddresses?.budsVault || "");
 
         console.log("whitelisting");
-        //const tx2 = await BudsVaultInst.whitelistContracts([deployedAddresses?.Staking || ""])
+        const tx2 = await BudsVaultInst.whitelistContracts([deployedAddresses?.Staking || ""])
 
-        //await tx2.wait();   
+        await tx2.wait();   
 
         if(taskArgs.amount != 0){
             console.log("buds approval");

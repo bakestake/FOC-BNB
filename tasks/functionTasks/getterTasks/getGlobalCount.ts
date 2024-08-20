@@ -1,7 +1,7 @@
 import { task } from "hardhat/config";
-import { getDeployedAddressesForChain } from "../../scripts/libraries/getDeployedAddresses";
+import { getDeployedAddressesForChain } from "../../../scripts/libraries/getDeployedAddresses";
 
-task("get-no-chains")
+task("get-gc")
 .addParam("chain")
 .setAction(async (taskArgs, hre) => {
     try{
@@ -11,9 +11,9 @@ task("get-no-chains")
 
         console.log("getting chain no")
 
-        const chains = await contractInst.getNoOfChains();
+        const chains = await contractInst.getGlobalStakedBuds();
 
-        console.log(chains)
+        console.log(chains/BigInt(1e18))
 
     }catch(error){
         console.log("Failed to unstake : ",error)

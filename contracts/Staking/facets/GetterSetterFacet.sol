@@ -21,15 +21,16 @@ contract GetterSetterFacet {
         return LibGlobalVarState.getCurrentApr();
     }
 
-    function getUserStakes(address user) public view returns(LibGlobalVarState.Stake[] memory){
+    function getUserStakes(address user) public view returns(uint256 budsAmount, uint256 tokenId){
         uint256 len = LibGlobalVarState.mappingStore().stakeRecord[user].length;
-        LibGlobalVarState.Stake[] memory stakes = new LibGlobalVarState.Stake[](len);  
+        tokenId = LibGlobalVarState.mappingStore().stakedFarmer[user];
+        budsAmount = 0;
 
         for (uint256 i = 0; i < len; i++) {
-            stakes[i] = LibGlobalVarState.mappingStore().stakeRecord[user][i];
+            LibGlobalVarState.Stake memory stk = LibGlobalVarState.mappingStore().stakeRecord[user][i];
+            budsAmount += stk.budsAmount;
         }
 
-        return stakes;
     }
 
     function getGlobalStakedBuds() public view returns (uint256) {
@@ -58,7 +59,7 @@ contract GetterSetterFacet {
     }
 
     function getRewardsForUser(address user) external view returns(uint256 rewards){
-        LibGlobalVarState.Stake[] memory stake = getUserStakes(user);
+        LibGlobalVarState.Stake[] memory stake = LibGlobalVarState.mappingStore().stakeRecord[user];
         uint256 stakedAmount = 0;
         
         for(uint i = 0; i < stake.length; i++){

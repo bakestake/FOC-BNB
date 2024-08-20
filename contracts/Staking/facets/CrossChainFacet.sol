@@ -13,6 +13,9 @@ import {LzState} from "../lib/Lz.sol";
 
 
 contract CrossChainFacet is OApp {
+
+    using OptionsBuilder for bytes; 
+
     function changeEndpoint(address _endpoint) external {
         LibDiamond.enforceIsContractOwner();
         LzState.getStorage().endpoint = ILayerZeroEndpointV2(_endpoint);
@@ -173,9 +176,14 @@ contract CrossChainFacet is OApp {
         uint256 budsAmount,
         uint256 tokenId,
         address sender
-    ) external view returns (uint256 fee) {
-        MessagingFee memory msgFee = _quote(eId, abi.encode(budsAmount, tokenId, sender), bytes("0"), false);
-        fee = msgFee.nativeFee;
+    ) external view returns (uint256) {
+        bytes memory payload = abi.encode(
+            LzState.getStorage().CROSS_CHAIN_STAKE_MESSAGE,
+            abi.encode(budsAmount, tokenId, sender)
+        );
+        bytes memory options = OptionsBuilder.addExecutorLzReceiveOption(OptionsBuilder.newOptions(), 2_500_000, 0);
+        MessagingFee memory ccmFees = _quote(eId, payload, options, false);
+        return ccmFees.nativeFee;
     }
 
     function _onStake(uint256 tokenId, address sender, uint256 _budsAmount) internal {

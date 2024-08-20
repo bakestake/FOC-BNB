@@ -36,11 +36,6 @@ contract Farmer is
     mapping(uint256 tokenId => uint8 level) public levelByTokenId;
     mapping(uint8 level => string uri) public uriByLevel;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
-
     function initialize(uint256 _seed, address _xp, address _stakingAddress, string[] memory uris) public initializer {
         if (_xp == address(0)) revert ZeroAddress();
 
@@ -59,7 +54,7 @@ contract Farmer is
         _grantRole(UPGRADER_ROLE, msg.sender);
         _grantRole(STAKING_CONTRACT, _stakingAddress);
 
-        _tokensLeft = 699;
+        _tokensLeft = 690;
         _nextTokenId = _seed;
         _xpToken = _xp;
 
@@ -90,9 +85,10 @@ contract Farmer is
         if (ownerOf(tokenId) != msg.sender) revert UnauthorizedAccess();
 
         uint256 xpToBurn = calculateRequiredXp(levelByTokenId[tokenId]);
-        levelByTokenId[tokenId]++;
-        
+
         IXP(_xpToken).burn(msg.sender, xpToBurn);
+
+        levelByTokenId[tokenId]++;
         _setTokenURI(tokenId, uriByLevel[levelByTokenId[tokenId]]);
     }
 
