@@ -29,16 +29,16 @@ Users can do following operations despite :-
 ## Feautures :-
   <img src="https://github.com/user-attachments/assets/d25f5c3d-2dd7-4240-8ff6-fe80cdeba359" width="480">
 
-  1. **Social logins** - Login with gmail address and other accounts.
-  2. **Gasless smart wallets** - For frictionless onboarding of users we have integrated gasless smart wallets which do not require users to pay gas for transactions.
-  3. **Multiplayer Lobbies** - Multiplayer lobbies for mini games.
-  4. **Cross chain transaction in-game** - No switching wallets or managing assets on different chains. users can do cross chain transactions from any chain to any chain.
+1. **Social logins** - Login with gmail address and other accounts.
+2. **Gasless smart wallets** - For frictionless onboarding of users we have integrated gasless smart wallets which do not require users to pay gas for transactions.
+3. **Multiplayer Lobbies** - Multiplayer lobbies for mini games.
+4. **Cross chain transaction in-game** - No switching wallets or managing assets on different chains. users can do cross chain transactions from any chain to any chain.
 
 ## Behind the scenes :-
   <img src="https://github.com/user-attachments/assets/c14aeccc-d06f-43c6-93cd-dde0ad493869" width="480">
 
-  1. Composable game assets for saving users time and money.
-  2. Unified game state on all supported chains.
-  3. AI-powered Liquidity management across the chains to manage and maintain the liquidity of $BUDS.
-  4. Multi-chain and on-chain economy.
+1. Composable game assets for saving users time and money.
+2. Unified game state on all supported chains.
+3. AI-powered Liquidity management across the chains to manage and maintain the liquidity of $BUDS.
+4. Multi-chain and on-chain economy.
 
