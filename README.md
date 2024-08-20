@@ -35,7 +35,7 @@ Users can do following operations despite :-
   4. **Cross chain transaction in-game** - No switching wallets or managing assets on different chains. users can do cross chain transactions from any chain to any chain.
 
 ## Behind the scenes :-
-  ![image](https://github.com/user-attachments/assets/c14aeccc-d06f-43c6-93cd-dde0ad493869)
+  <img src="https://github.com/user-attachments/assets/c14aeccc-d06f-43c6-93cd-dde0ad493869" width="480">
 
   1. Composable game assets for saving users time and money.
   2. Unified game state on all supported chains.
