@@ -27,7 +27,7 @@ Users can do following operations despite :-
   5. **bridge tokens and NFTs** from one chain to another chain in game itself.
 
 ## Feautures :-
-  ![image](https://github.com/user-attachments/assets/d25f5c3d-2dd7-4240-8ff6-fe80cdeba359)
+  <img src="[https://github.com/favicon.ico](https://github.com/user-attachments/assets/d25f5c3d-2dd7-4240-8ff6-fe80cdeba359)" width="48">
 
   1. **Social logins** - Login with gmail address and other accounts.
   2. **Gasless smart wallets** - For frictionless onboarding of users we have integrated gasless smart wallets which do not require users to pay gas for transactions.
